@@ -22,7 +22,14 @@ class MainActivity : AppCompatActivity() {
             return@async "Finished Coroutine ${tasknumber}"
         }
 
-    
+    fun launchCoroutines(view: View) {
+        (1..count).forEach {
+            binding.statusText.text = "Started Coroutine ${it}"
+            coroutineScope.launch(Dispatchers.Main) {
+                binding.statusText.text = performTask(it).await()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
